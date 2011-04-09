@@ -57,7 +57,7 @@ class SearchManager extends Actor {
     
     // send stalker results back to the comet actor
     case Some(r@Result(t, content)) => self.reply(r)
-      
+    
     // determine query type
     case DetermineQueryType(query: Query) => {
       val stalker = registry.actorFor[Stalker]
@@ -72,8 +72,11 @@ class SearchManager extends Actor {
       
       List(IsEmailAddress, IsTwitterUsername).map(_(query.content)).filter(!_.isEmpty) match {
         case List(r,_*) => r match {
-          case Some(t: TwitterUsername.type) => stalker.map(_ ! Process(query, ServiceFunctionRegistry.Twitter))
-          case Some(t: EmailAddress.type) => stalker.map(_ ! Process(query, ServiceFunctionRegistry.WhoisFromEmail))
+          case Some(t: TwitterUsername.type) => 
+            self.reply("TEST")
+            // stalker.map(_ ! Process(query, ServiceFunctionRegistry.Twitter))
+          case Some(t: EmailAddress.type) => 
+            // stalker.map(_ ! Process(query, ServiceFunctionRegistry.WhoisFromEmail))
           case _ => 
         }
       }

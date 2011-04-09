@@ -11,6 +11,8 @@ import teamawesome.actor._
 class Search extends AkkaCometActor {
   
   override def lowPriority = {
+    case s : String => 
+      partialUpdate(SetHtml("status", Text("XXXXXXXXXXXXXXXXXXXX" + s)))
     case WorkingInBackground(msg) => 
       partialUpdate(SetHtml("status", Text("Stalking you...")))
     case Result(t,c) => 
