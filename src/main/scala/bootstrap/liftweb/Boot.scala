@@ -1,34 +1,22 @@
-
-
 package bootstrap.liftweb
 
-import net.liftweb._
-import http.{LiftRules, NotFoundAsTemplate, ParsePath}
-import sitemap.{SiteMap, Menu, Loc}
-import util.{ NamedPF }
-
+import net.liftweb._,
+  util.NamedPF,
+  http.{LiftRules, NotFoundAsTemplate, ParsePath},
+  sitemap.{SiteMap, Menu, Loc}
 
 class Boot {
   def boot {
-  
-  
-    // where to search snippet
     LiftRules.addToPackages("teamawesome")
-
-    // build sitemap
-    val entries = List(Menu("Home") / "index") :::
-                  Nil
+    LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     
     LiftRules.uriNotFound.prepend(NamedPF("404handler"){
       case (req,failure) => NotFoundAsTemplate(
         ParsePath(List("exceptions","404"),"html",false,false))
     })
     
-    LiftRules.setSiteMap(SiteMap(entries:_*))
-    
-    // set character encoding
-    LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
-    
-    
+    LiftRules.setSiteMap(SiteMap(
+      Menu("Home") / "index"
+    ))
   }
 }
