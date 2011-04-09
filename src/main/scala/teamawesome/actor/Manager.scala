@@ -7,8 +7,8 @@ import org.apache.commons.net.whois.WhoisClient
 
 case class Query(content: String)
 case class Process(q: Query, f: Query => Option[Result])
-
 case class Result(t: MediaType, content: NodeSeq)
+case class WorkingInBackground(msg: Option[String])
 
 trait MediaType
 case object Text extends MediaType
@@ -47,14 +47,9 @@ class SearchManager extends Actor {
       println("********* Recieved: " + value.toString)
       // send to worker
       registry.actorFor[Stalker].map {
-        _ ! Process(value, ServiceFunctionRegistry.WhoIs)
+        _ !!! Process(value, ServiceFunctionRegistry.WhoIs)
       }
+      self.reply(WorkingInBackground(Some("Stalking you...")))
     }
-  }
-}
-
-class Stalker extends Actor {
-  def receive = {
-    case Process(v, f) => f(v)
   }
 }
