@@ -3,7 +3,7 @@ package teamawesome.actor
 import scala.xml.NodeSeq
 import akka.actor.Actor
 
-import org.apache.commons.net.WhoisClient
+import org.apache.commons.net.whois.WhoisClient
 
 case class Query(content: String)
 case class Process(q: Query, f: Query => Option[Result])
@@ -23,9 +23,9 @@ object ServiceFunctionRegistry {
 
     val whoisClient = new WhoisClient
     
-    whoisClient.connect("whois.omnis.com", 43)
+    whoisClient.connect("whois.namejuice.com", 43)
     
-    val results = whoisClient.query( nameToQuery )
+    val results = whoisClient.query( q.content )
 
     println("_+_+_+_+_+_+_+_++?>>>>> " + results )
     
