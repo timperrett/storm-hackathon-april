@@ -24,6 +24,7 @@ class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) with de.ele
   val specs     = "org.scala-tools.testing" %% "specs" % "1.6.6" % "test->default"
 
   val dispatch   = "net.databinder" %% "dispatch-http" % "0.7.8" % "compile"
+  val twitter    = "net.databinder" %% "dispatch-twitter" % "0.7.8" % "compile"
   
   object Repositories {
     lazy val MavenLocal           = MavenRepository("local.repo", "file://"+Path.userHome+"/.m2/repository")
@@ -35,7 +36,6 @@ class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) with de.ele
     lazy val SonatypeRepo         = MavenRepository("oss.sonatype.org", "http://oss.sonatype.org/content/groups/github/")
     lazy val AkkaRepo             = MavenRepository("akka.repo", "http://akka.io/repository/")
     lazy val GuiceyFruitRepo      = MavenRepository("guiceyfruit.repo", "http://guiceyfruit.googlecode.com/svn/repo/releases/")
-    //lazy val DispatchRepo         = MavenRepository("guiceyfruit.repo", "http://guiceyfruit.googlecode.com/svn/repo/releases/")
   }
   
   import Repositories._
