@@ -23,11 +23,19 @@ class Boot {
       Menu("Home") / "index"
     ))
     
+    
+    /**
+     * Load actors upon booting the application
+     */
     Supervisor(
       SupervisorConfig(
         OneForOneStrategy(List(classOf[Throwable]), 3, 1000),
         Supervise(
           actorOf[teamawesome.actor.SearchManager],
+          Permanent,
+          false) ::
+        Supervise(
+          actorOf[teamawesome.actor.Stalker],
           Permanent,
           false) ::
         Nil))
