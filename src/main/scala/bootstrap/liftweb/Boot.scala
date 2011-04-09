@@ -29,7 +29,7 @@ class Boot {
         Supervise(
           actorOf[teamawesome.actor.SearchManager],
           Permanent,
-          true) ::
+          false) ::
         Nil))
     
   }
