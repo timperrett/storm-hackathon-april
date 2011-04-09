@@ -13,10 +13,10 @@ class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) {
   /**
    * Application dependencies
    */
-  val webkit    = "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default"
-  val logback   = "ch.qos.logback" % "logback-classic" % "0.9.26" % "compile->default"
-  val akka      = "se.scalablesolutions.akka" % "akka-actor" % "1.0" % "compile"
-  // val akka      = "se.scalablesolutions.akka" % "akka-remote" % "1.0" % "compile"
+  val webkit      = "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default"
+  val logback     = "ch.qos.logback" % "logback-classic" % "0.9.26" % "compile->default"
+  val akka        = "se.scalablesolutions.akka" % "akka-actor" % "1.0" % "compile"
+  val commonsnet  = "commons-net" % "commons-net" % "2.2" % "compile"
   
   val servlet   = "javax.servlet" % "servlet-api" % "2.5" % "provided->default"
   val jetty6    = "org.mortbay.jetty" % "jetty" % "6.1.22" % "test->default"  
