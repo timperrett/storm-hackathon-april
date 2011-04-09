@@ -5,6 +5,10 @@ import net.liftweb._,
   http.{LiftRules, NotFoundAsTemplate, ParsePath},
   sitemap.{SiteMap, Menu, Loc}
 
+import akka.actor.Actor.actorOf
+import akka.actor.Supervisor
+import akka.config.Supervision.{SupervisorConfig,OneForOneStrategy,Supervise,Permanent}
+
 class Boot {
   def boot {
     LiftRules.addToPackages("teamawesome")
@@ -18,5 +22,15 @@ class Boot {
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index"
     ))
+    
+    Supervisor(
+      SupervisorConfig(
+        OneForOneStrategy(List(classOf[Throwable]), 3, 1000),
+        Supervise(
+          actorOf[teamawesome.actor.SearchManager],
+          Permanent,
+          true) ::
+        Nil))
+    
   }
 }

@@ -5,6 +5,11 @@ import sbt._
 class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) {
   val liftVersion = "2.3"
   
+  override def compileOptions = Unchecked :: Deprecation :: super.compileOptions.toList
+  override def managedStyle = ManagedStyle.Maven
+  override def jettyWebappPath = webappPath 
+  override def scanDirectories = Nil
+  
   /**
    * Application dependencies
    */
