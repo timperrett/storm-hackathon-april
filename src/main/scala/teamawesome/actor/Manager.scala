@@ -20,23 +20,22 @@ object ServiceFunctionRegistry {
 
   val WhoIs: ⊛ = q => {
     println(q.content)
-
+    
     val whoisClient = new WhoisClient
     
     whoisClient.connect("whois.omnis.com", 43)
     
     val results = whoisClient.query( nameToQuery )
-
+    
     println("_+_+_+_+_+_+_+_++?>>>>> " + results )
     
     None
   }
-
+  
   val Twitter: ⊛ = q => {
     println("*******************")
     None
   }
-
 }
 
 import akka.actor.Actor.registry
@@ -47,14 +46,8 @@ class SearchManager extends Actor {
       println("********* Recieved: " + value.toString)
       // send to worker
       registry.actorFor[Stalker].map {
-        _ ! Process(value, ServiceFunctionRegistry.WhoIs)
+        _ !!! Process(value, ServiceFunctionRegistry.WhoIs)
       }
     }
-  }
-}
-
-class Stalker extends Actor {
-  def receive = {
-    case Process(v, f) => f(v)
   }
 }
