@@ -19,15 +19,18 @@ object ServiceFunctionRegistry {
   type ⊛ = Query => Option[Result]
 
   val WhoIs: ⊛ = q => {
-    println(q.content)
-
+	  
     val whoisClient = new WhoisClient
-    
-    whoisClient.connect("whois.namejuice.com", 43)
-    
-    val results = whoisClient.query( q.content )
+    whoisClient.connect("whois.opensrs.net", 43)
+    val results = whoisClient.query(q.content)
 
-    println("_+_+_+_+_+_+_+_++?>>>>> " + results )
+    var address = results
+    				.split("\r\n\r\n")
+    				.toList
+    				.filter( _.toLowerCase.contains("address") )
+    				.mkString("\n\n")
+    
+    println("<><<><><><><><><><><><><><><><><><><><>" + address)
     
     None
   }
