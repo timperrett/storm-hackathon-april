@@ -14,7 +14,8 @@ case object Video extends MediaType
 case object Image extends MediaType
 
 object ServiceFunctionRegistry { 
-  val WhoIs: Query => Option[Result] = q => {
+  type ⊛ = Query => Option[Result]
+  val WhoIs: ⊛ = q => {
     println("*******************")
     None
   }
