@@ -1,0 +1,142 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="GENERATOR" content="Microsoft FrontPage 5.0" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="stylesheet" href="css/style.css?v=2" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+  <script src="js/libs/modernizr-1.7.min.js"></script>
+  <script src="js/jquery.masonry.min.js"></script>
+  <script type="text/javascript">
+    //<![CDATA[
+    window.jQuery || document.write("<script src='js/libs/jquery-1.5.1.min.js'>\x3C/script>")
+    //]]>
+  </script>
+  <script type="text/javascript">
+  //<![CDATA[
+  var randomrotate = function(){ 
+    var rotate=Math.round(Math.random()*6-3);
+    $(this).css("-webkit-transform","rotate(" + rotate + "deg)"); 
+    $(this).css("-moz-transform","rotate(" + rotate + "deg)");
+    $(this).css("rotation","rotate(" + rotate + "deg)");
+    $(this).css("-webkit-transform","rotate(" + rotate + "deg)"); 
+  };
+
+  var randomshift = function(){
+    var direction = ['left', 'top', 'right', 'bottom'];
+    $(this).css("margin-' + direction[Math.floor(Math.random() * direction.length)] + '","-50px"); 
+  };
+
+        $(window).load(function(){  
+
+          $('#info').masonry({
+          columnWidth: 100, 
+         itemSelector: '.box',
+         animate: true,
+          animationOptions: {
+           duration: 250,
+            easing: 'swing',
+            queue: false
+         }
+        });
+      //$(".box").each(randomrotate);
+      $(".box").each(randomshift);
+      });
+
+      var addnewcontent = function ( content ) {
+          var $wall = $('#info');
+          // create jQuery object
+          $box = $( content );
+          $.each( [$box], randomrotate);
+          $wall.append( $box ).masonry( { appendedContent: $box } 
+          );
+      }        
+
+        $("#title").click( function(){
+          console.log("clickyyy");
+          addnewcontent('<div class="box med"><img src="http://placekitten.com/300/300" /></div>');
+         } );
+  //]]>
+  </script>
+  <title>StalkeRing</title>
+</head>
+
+<body>
+  <div id="container">
+    <div class="youtube">
+      <object width="425" height="355">
+        <param name="movie" value="http://www.youtube.com/v/W4aS0Pvtid4&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;volume=100"></param>
+        <param name="allowscriptaccess" value="always"></param>
+        <param name="volume" value="100"></param>
+        <param name="wmode" value="transparent"></param>
+        <embed src="http://www.youtube.com/v/W4aS0Pvtid4&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;volume=100" type="application/x-shockwave-flash" allowscriptaccess="always" wmode="transparent" width="425" height="355" volume="100"></embed>
+      </object>
+      <object width="425" height="355">
+        <param name="movie" value="http://www.youtube.com/v/OQSNhk5ICTI&amp;autoplay=1&amp;loop=1&amp;showinfo=0&amp;volume=100&amp;start=53"></param>
+        <param name="allowscriptaccess" value="always"></param>
+        <param name="volume" value="100"></param>
+        <param name="wmode" value="transparent"></param>
+        <embed src="http://www.youtube.com/v/OQSNhk5ICTI&autoplay=1&loop=1&amp;showinfo=0&amp;volume=100&amp;start=53" type="application/x-shockwave-flash" allowscriptaccess="always" wmode="transparent" width="425" height="355" volume="100"></embed>
+      </object>
+    </div>
+    <div id="topbar">
+      <img src="img/Golden ring - Click image to download.gif" width="32" height="32" />Search our <strong>StalkeRing</strong> ! <br /><input type="text" value="Enter a name, e-mail address or username"></input>
+    </div>
+    
+    <header>
+      <h1 id="title">
+        <img src="img/heart_3.gif" />
+        <img src="img/heart_3.gif" />Dave Kelly Fans'<img src="img/heart_3.gif" /><img src="img/heart_3.gif" />
+      </h1>
+      <!-- <h2>&ldquo; the best D-kelz resource on the world wide web !!! &rdquo;</h2> -->
+      <img src="img/Sheep_dances_2.gif" />
+    </header>
+    
+    <div id="info" role="main">
+      <div class="box wide">
+        <!-- <iframe width="680" height="330" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=milsom+street,+bath&amp;aq=&amp;sll=51.406059,-2.362061&amp;sspn=1.322692,3.370056&amp;ie=UTF8&amp;hq=&amp;hnear=Milsom+St,+Bath,+Bath+and+North+East+Somerset+BA1+1,+United+Kingdom&amp;t=h&amp;layer=c&amp;cbll=51.383045,-2.360848&amp;panoid=8YWDXED1TJnMZvNwfx4xZQ&amp;cbp=13,139.01,,0,-12.54&amp;ll=51.377687,-2.360859&amp;spn=0.018751,0.060081&amp;z=14&amp;output=svembed"></iframe> -->
+      </div>
+    </div>
+    
+    <footer>
+      
+    </footer>
+    
+    
+    <table class="hits" width="133" border="0" cellspacing="0" cellpadding="3" align="center">
+      <tr>
+        <td align="center">
+          <a href="http://www.website-hit-counters.com" target="_blank">
+            <!-- <img src="http://www.website-hit-counters.com/cgi-bin/image.pl?URL=582432-4979" alt="web page hit counters" title="web page hit counters" border="0" /> -->
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <!-- <font style="font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 9px; color: #330006; text-decoration: none;">
+            <a href="http://www.website-hit-counters.com" target="_blank" style="font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 9px; color: #555556; text-decoration: none;" title="web page hit counters">web page hit counters</a> 
+          </font> -->
+          <br />
+          <br />
+          <br />
+          <a href="http://chrome.google.com/">
+            <img src="img/chrome.gif" /></a>
+          <a href="http://chrome.google.com/"><img src="img/POWERED_BY_LIFT.gif" /></a>
+          <a href="http://chrome.google.com/"><img src="img/scalapowered.gif" /></a>
+          <br />
+          <br />
+          <br />
+          Copy right 1998 stalkymcstalkstalk@hotmail.com.
+        </td>
+      </tr>
+    </table>
+    
+  </div> 
+  
+</body>
+</html>

@@ -1,14 +1,18 @@
-
-
 import sbt._
 
-class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) with de.element34.sbteclipsify.Eclipsify  {
+class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) 
+    with de.element34.sbteclipsify.Eclipsify
+    with stax.StaxPlugin {
+  
   val liftVersion = "2.3"
   
   override def compileOptions = Unchecked :: Deprecation :: super.compileOptions.toList
   override def managedStyle = ManagedStyle.Maven
   override def jettyWebappPath = webappPath 
   override def scanDirectories = Nil
+  
+  override def staxApplicationId = "stalkering"
+  override def staxUsername = "timperrett"
   
   /**
    * Application dependencies
