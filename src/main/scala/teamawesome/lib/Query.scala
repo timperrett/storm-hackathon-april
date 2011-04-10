@@ -6,11 +6,6 @@ object QueryIdentifier extends Enumeration {
   val TwitterUsername, EmailAddress, Website = Value
 }
 
-// sealed trait QueryIdentifier
-// case object TwitterUsername extends QueryIdentifier
-// case object EmailAddress extends QueryIdentifier
-// case object Website extends QueryIdentifier
-
 trait QueryAugmentation {
   import QueryIdentifier._
   type InputAssement = String => Option[QueryIdentifier.Value]
