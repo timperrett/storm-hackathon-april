@@ -7,7 +7,8 @@ import teamawesome.lib.{Query,Discovered}
 import net.liftweb._,
   util.Helpers._,
   http.SHtml,
-  http.js.JsCmds.{Noop,SetHtml,Run}
+  http.js.JsCmds.{Noop,SetHtml,Run},
+  http.js.JE.JsRaw
 
 class Search extends AkkaCometActor {
   
@@ -16,8 +17,11 @@ class Search extends AkkaCometActor {
       partialUpdate(SetHtml("status", Text("XXXXXXXXXXXXXXXXXXXX" + s)))
     case WorkingInBackground(msg) => 
       partialUpdate(SetHtml("status", Text("Stalking you...")))
-    case Some(Discovered(what)) => 
-      partialUpdate(SetHtml("status", Text("ZZZZZZZZZ")))
+    case Some(Discovered(what)) => {
+      what.foreach(println)
+      partialUpdate(Run("""addnewcontent('%s')""".format(what.map(_.data.toString + ", "))))
+      // partialUpdate(SetHtml("status", Text("ZZZZZZZZZ")))
+    }
     case unknown => println("+++++++ " + unknown)
     
       // partialUpdate(

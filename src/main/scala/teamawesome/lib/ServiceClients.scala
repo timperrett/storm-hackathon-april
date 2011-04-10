@@ -59,32 +59,19 @@ object ServiceClient {
       :/("socialgraph.googleapis.com") / "otherme" <<? 
         Map("q" -> q.content) >- JsonParser.parse)
   
-  val URLsFromEmail: ⊛ = q => {
-    val urls: List[String] = for {
-      JObject(otherMe) <- socialJsonFor(q)
-      JField(_, JObject(profileObj)) <- otherMe
-      JField("url", JString(url)) <- profileObj
-    } yield url
-    
-    
-    println
-    urls.foreach(l => println(">>>>>>>>>>>>>>>>>> URL: " + l))
-    urls.filter( _.contains("twitter") ).map( _.replaceAll(".*/", "") ).foreach( l => println(">>>>>>>>>>>>>>>>>>>>>>> TWITTER: " + l) )
-    
-    None
-  }
+  private def getFacts(q: Query, field: String) = 
+    try {
+      Some(Discovered(for {
+        JObject(other) <- socialJsonFor(q)
+        JField(_, JObject(profile)) <- other
+        JField(field, JString(f)) <- profile
+      } yield Fact(f)))
+    } catch {
+      case e => None
+    }
   
-  val PhotosFromEmail: ⊛ = q => {
-    val photos = for {
-      JObject(otherMe) <- socialJsonFor(q)
-      JField(_, JObject(profileObj)) <- otherMe
-      JField("photo", JString(photo)) <- profileObj
-    } yield photo
-    
-    println
-    photos.foreach(l => println(">>>>>>>>>>>>>>>>>> PHOTO: " + l))
-    
-    None
-  }
+  val URLsFromEmail: ⊛ = q => getFacts(q,"url")
+  
+  val PhotosFromEmail: ⊛ = q => getFacts(q,"photo")
 
 }
