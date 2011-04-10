@@ -6,7 +6,7 @@ import teamawesome.actor.{AkkaCometActor,QueryDispatcher,WorkingInBackground,Det
 import teamawesome.lib.{Query,Discovered,Fact}
 import net.liftweb._,
   util.Helpers._,
-  http.SHtml,
+  http.{SHtml,S},
   http.js.JsCmds.{Noop,SetHtml,Run},
   http.js.JE.JsRaw
 
@@ -34,8 +34,7 @@ class Search extends AkkaCometActor {
       SHtml.ajaxText("Who do you want to stalk today?", v => {
         println("++++++++++++ Sending query %s".format(v))
         registry.actorFor[QueryDispatcher].map(_ ! DetermineQueryType(Query(v)))
-        Run("$('#web1').fadeOut()")
-        // Run()
+        Run("$('#modal').overlay({ top: '30%', closeOnClick: false, load: true }); $('#web1').fadeOut();")
       })
     } 
 }

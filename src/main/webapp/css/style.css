@@ -179,3 +179,25 @@ body.web2 {
   
   /* html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; } */
 }
+
+
+
+
+.modal {
+		background-color:#000;
+    display:none;
+		width:200px;
+		height: 60px;
+		padding:15px;
+		text-align: center;
+		border:2px solid #000;
+		-moz-border-radius:6px;
+		-webkit-border-radius:6px;
+		-moz-box-shadow: 0 0 50px #ccc;
+		-webkit-box-shadow: 0 0 50px #ccc;
+}
+.modal h2 {
+  font-size: 20px;
+  font-weight: lighter;
+  color: #fff;
+}
