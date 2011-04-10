@@ -2,7 +2,7 @@ package bootstrap.liftweb
 
 import net.liftweb._,
   util.NamedPF,
-  http.{LiftRules, NotFoundAsTemplate, ParsePath},
+  http.{LiftRules, NotFoundAsTemplate, ParsePath, XHtmlInHtml5OutProperties, Req},
   sitemap.{SiteMap, Menu, Loc}
 
 import akka.actor.Actor.actorOf
@@ -22,6 +22,9 @@ class Boot {
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index"
     ))
+    
+    LiftRules.htmlProperties.default.set((r: Req) => 
+      new XHtmlInHtml5OutProperties(r.userAgent)) 
     
     
     /**
