@@ -18,16 +18,19 @@ class QueryDispatcher extends Actor with QueryAugmentation {
     
     // determine query type
     case DetermineQueryType(query: Query) => {
-      val stalker = registry.actorFor[Stalker]
+      val stalker = registry.actorFor[Stalker].getOrElse(throw new Exception("No stalker!"))
       val queryTypes = List(IsEmailAddress, IsTwitterUsername, IsWebsite)
       
       queryTypes.map(_(query.content)).filterNot(_.isEmpty) match {
         case List(r,_*) => r match {
           case Some(t: TwitterUsername.type) => 
-            stalker.map(_ ! Process(query, Twitter))
+            stalker.forward(Process(query, Twitter))
           case Some(t: EmailAddress.type) => {
-            stalker.map(_ ! Process(query, WhoisFromEmail))
-            stalker.map(_ ! Process(query, EmailToPhotos))
+            stalker.forward(Process(query, WhoisFromEmail))
+            stalker.forward(Process(query, PhotosFromEmail))
+            stalker.forward(Process(query, URLsFromEmail))
+            // stalker.map(_ ! Process(query, WhoisFromEmail))
+            // stalker.map(_ ! Process(query, EmailToPhotos))
           }
           
 //          case Some(t: Website.type) => stalker.map(_ ! Process(query, ServiceFunctionRegistry.WebsiteTo))

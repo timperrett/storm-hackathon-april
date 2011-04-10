@@ -3,7 +3,7 @@ package teamawesome.comet
 import scala.xml.{NodeSeq,Text}
 import akka.actor.Actor.registry
 import teamawesome.actor.{AkkaCometActor,QueryDispatcher,WorkingInBackground,DetermineQueryType}
-import teamawesome.lib.Query
+import teamawesome.lib.{Query,Discovered}
 import net.liftweb._,
   util.Helpers._,
   http.SHtml,
@@ -16,9 +16,13 @@ class Search extends AkkaCometActor {
       partialUpdate(SetHtml("status", Text("XXXXXXXXXXXXXXXXXXXX" + s)))
     case WorkingInBackground(msg) => 
       partialUpdate(SetHtml("status", Text("Stalking you...")))
-    // case Result(t,c) => 
+    case Some(Discovered(what)) => 
+      partialUpdate(SetHtml("status", Text("ZZZZZZZZZ")))
+    case unknown => println("+++++++ " + unknown)
+    
       // partialUpdate(
-        // Run("""addnewcontent(<div class="box">Sample</div>)"""))
+        // Run("""addnewcontent(<div class="box">Sample</div>)""")
+      // )
   }
   
   def render =

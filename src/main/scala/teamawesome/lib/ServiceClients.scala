@@ -53,37 +53,37 @@ object ServiceClient {
 
   val WhoisFromEmail: ⊛ = q =>
     WhoIs(q.copy(content = q.content.split("@").last))
-
-  val EmailToPhotos: ⊛ = q => {
-    val email = q.content
-
-    //https://socialgraph.googleapis.com/otherme?q=tperrett@gmail.com
-
-    val req = :/("socialgraph.googleapis.com") / "otherme" <<? Map("q" -> q.content)
-
-    val jsonResp = Http(req >- JsonParser.parse)
-
-    val photos = for {
-      JObject(otherMe) <- jsonResp
-      JField(_, JObject(profileObj)) <- otherMe
-      JField("photo", JString(photo)) <- profileObj
-    } yield photo
-
-    println
-    photos.foreach(l => println(">>>>>>>>>>>>>>>>>> PHOTO: " + l))
-
-    val urls = for {
-      JObject(otherMe) <- jsonResp
+  
+  private def socialJsonFor(q: Query) = 
+    Http(
+      :/("socialgraph.googleapis.com") / "otherme" <<? 
+        Map("q" -> q.content) >- JsonParser.parse)
+  
+  val URLsFromEmail: ⊛ = q => {
+    val urls: List[String] = for {
+      JObject(otherMe) <- socialJsonFor(q)
       JField(_, JObject(profileObj)) <- otherMe
       JField("url", JString(url)) <- profileObj
     } yield url
-
+    
+    
     println
     urls.foreach(l => println(">>>>>>>>>>>>>>>>>> URL: " + l))
-    
     urls.filter( _.contains("twitter") ).map( _.replaceAll(".*/", "") ).foreach( l => println(">>>>>>>>>>>>>>>>>>>>>>> TWITTER: " + l) )
-
-    //   Some( Result(Image, photos.map(p => <div class="box"><img src={p} /></div>)))
+    
+    None
+  }
+  
+  val PhotosFromEmail: ⊛ = q => {
+    val photos = for {
+      JObject(otherMe) <- socialJsonFor(q)
+      JField(_, JObject(profileObj)) <- otherMe
+      JField("photo", JString(photo)) <- profileObj
+    } yield photo
+    
+    println
+    photos.foreach(l => println(">>>>>>>>>>>>>>>>>> PHOTO: " + l))
+    
     None
   }
 
