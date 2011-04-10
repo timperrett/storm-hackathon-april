@@ -26,19 +26,11 @@ class Boot {
     LiftRules.htmlProperties.default.set((r: Req) => 
       new XHtmlInHtml5OutProperties(r.userAgent)) 
     
-    
-    /**
-     * Load actors upon booting the application
-     */
     Supervisor(
       SupervisorConfig(
-        OneForOneStrategy(List(classOf[Throwable]), 3, 1000),
+        OneForOneStrategy(List(classOf[Exception]), 3, 1000),
         Supervise(
           actorOf[teamawesome.actor.QueryDispatcher],
-          Permanent,
-          false) ::
-        Supervise(
-          actorOf[teamawesome.actor.Stalker],
           Permanent,
           false) ::
         Nil))

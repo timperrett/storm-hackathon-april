@@ -1,4 +1,4 @@
 package teamawesome.actor
 
 // front end notifications
-case class WorkingInBackground(msg: Option[String])
+case class MessageToUser(msg: Option[String])

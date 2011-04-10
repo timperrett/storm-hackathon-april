@@ -1,24 +1,20 @@
 package teamawesome.actor
 
 import scala.xml.NodeSeq
-import akka.actor.Actor
-import akka.actor.Actor.registry
+import akka.actor.{Actor,PoisonPill}
+import akka.actor.Actor.actorOf
 import teamawesome.lib.{Query, QueryAugmentation, ServiceClient, Discovered}
 import teamawesome.lib.QueryIdentifier._
 
-case class DetermineQueryType(content: Query)
-case class Process(q: Query, f: Query => Option[Discovered])
+case class NewQuery(content: Query)
+case class Process(q: Query, f: Query => Option[Discovered[_]])
 
 class QueryDispatcher extends Actor with QueryAugmentation {
   import ServiceClient._
   
   def receive = {
-    // send stalker results back to the comet actor
-    // case Some(r@Result(t, content)) => self.reply(r)
-    
-    // determine query type
-    case DetermineQueryType(query: Query) => {
-      val stalker = registry.actorFor[Stalker].getOrElse(throw new Exception("No stalker!"))
+    case NewQuery(query: Query) => {
+      val stalker = actorOf[Stalker].start
       val queryTypes = List(IsEmailAddress, IsTwitterUsername, IsWebsite)
       
       queryTypes.map(_(query.content)).filterNot(_.isEmpty) match {
@@ -29,16 +25,17 @@ class QueryDispatcher extends Actor with QueryAugmentation {
             stalker.forward(Process(query, WhoisFromEmail))
             stalker.forward(Process(query, PhotosFromEmail))
             stalker.forward(Process(query, URLsFromEmail))
-            // stalker.map(_ ! Process(query, WhoisFromEmail))
-            // stalker.map(_ ! Process(query, EmailToPhotos))
           }
           
-//          case Some(t: Website.type) => stalker.map(_ ! Process(query, ServiceFunctionRegistry.WebsiteTo))
+          //case Some(t: Website.type) => stalker.map(_ ! Process(query, ServiceFunctionRegistry.WebsiteTo))
           
           case _ => 
         }
       }
-      self.reply(WorkingInBackground(Some("Stalking you...")))
+      // notify the work it needs to shutdown
+      stalker ! PoisonPill
+      // notify the front end that stuff is happening
+      // self.reply(MessageToUser(Some("Prowling...")))
     }
   }
 }

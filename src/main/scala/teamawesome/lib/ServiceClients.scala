@@ -1,25 +1,15 @@
 package teamawesome.lib
 
+import scala.xml.NodeSeq
+import dispatch._, Http._, json.Js._, twitter._
 import org.apache.commons.net.whois.WhoisClient
-
-import dispatch._
-import Http._
-import json.Js._
-import twitter._
-
 import net.liftweb.json.JsonParser
 import net.liftweb.json.JsonAST._
-
-import net.liftweb.util._
-import net.liftweb.common.Box
-import scala.xml.NodeSeq
-
-import net.liftweb.util._
-
+import net.liftweb.util.PCDataXmlParser
 import org.jsoup.Jsoup
 
 object ServiceClient {
-  type ⊛ = Query => Option[Discovered]
+  type ⊛ = Query => Option[Discovered[_]]
 
   val WhoIs: ⊛ = q => {
     val address = (try {
@@ -103,19 +93,23 @@ object ServiceClient {
       :/("socialgraph.googleapis.com") / "otherme" <<?
         Map("q" -> q.content) >- JsonParser.parse)
 
-  private def getFacts(q: Query, field: String) =
+  private def getFacts[A <: Presentable](q: Query, field: String)(func: String => Fact[A]) =
     try {
       Some(Discovered(for {
         JObject(other) <- socialJsonFor(q)
         JField(_, JObject(profile)) <- other
         JField(field, JString(f)) <- profile
-      } yield Fact(f)))
+      } yield func(f)))
     } catch {
       case e => None
     }
 
-  val URLsFromEmail: ⊛ = q => getFacts(q, "url")
+  val URLsFromEmail: ⊛ = q => getFacts[Website](q, "url"){ data => 
+    Fact(Website(data))
+  }
 
-  val PhotosFromEmail: ⊛ = q => getFacts(q, "photo")
+  val PhotosFromEmail: ⊛ = q => getFacts[Photo](q, "photo"){ data => 
+    Fact(Photo(data))
+  }
 
 }
