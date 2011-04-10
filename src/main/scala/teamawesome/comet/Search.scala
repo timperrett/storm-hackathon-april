@@ -16,16 +16,18 @@ class Search extends AkkaCometActor {
   
   override def lowPriority = {
     case WorkingInBackground(msg) => 
-      partialUpdate(SetHtml("status", Text("Stalking you...")))
+      partialUpdate(SetHtml("modal_msg", Text("Prowling...")))
+    
     case Some(Discovered(what)) => {
-      what.foreach(println)
+      println("------------------------------")
       // send new events back into the system
       val newFacts = facts diff what
+      // newFacts.foreach(f => )
       
       facts = (facts ::: what).distinct
-      
-      partialUpdate(Run("""addnewcontent('%s')""".format(what.map(_.data.toString + ", "))))
-      // partialUpdate(SetHtml("status", Text("ZZZZZZZZZ")))
+      partialUpdate(Run("addNewContent('ZZZ')"))
+      // partialUpdate(Run("""addnewcontent('%s')""".format(what.map(_.data.toString + ", "))))
+      // partialUpdate(SetHtml("modal_msg", Text("ZZZZZZZZZ")))
     }
   }
   
