@@ -1,7 +1,6 @@
 package teamawesome.actor
 
-import net.liftweb._,
-  http.CometActor
+import net.liftweb._, http.CometActor
 import akka.actor.{Actor,ActorRef}
 
 trait AkkaCometActor extends CometActor {

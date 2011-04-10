@@ -31,7 +31,7 @@ class Boot {
       SupervisorConfig(
         OneForOneStrategy(List(classOf[Throwable]), 3, 1000),
         Supervise(
-          actorOf[teamawesome.actor.SearchManager],
+          actorOf[teamawesome.actor.QueryDispatcher],
           Permanent,
           false) ::
         Supervise(

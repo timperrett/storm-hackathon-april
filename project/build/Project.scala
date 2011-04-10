@@ -2,7 +2,7 @@
 
 import sbt._
 
-class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) {
+class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) with de.element34.sbteclipsify.Eclipsify  {
   val liftVersion = "2.3"
   
   override def compileOptions = Unchecked :: Deprecation :: super.compileOptions.toList
@@ -22,6 +22,9 @@ class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) {
   val jetty6    = "org.mortbay.jetty" % "jetty" % "6.1.22" % "test->default"  
   val junit     = "junit" % "junit" % "4.5" % "test->default"
   val specs     = "org.scala-tools.testing" %% "specs" % "1.6.6" % "test->default"
+
+  val dispatch   = "net.databinder" %% "dispatch-http" % "0.7.8" % "compile"
+  val twitter    = "net.databinder" %% "dispatch-twitter" % "0.7.8" % "compile"
   
   object Repositories {
     lazy val MavenLocal           = MavenRepository("local.repo", "file://"+Path.userHome+"/.m2/repository")
