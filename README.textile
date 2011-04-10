@@ -4,4 +4,4 @@ h1. Team Members
 
 * Timothy Perrett
 * Matthew Gillard
-* Felix 
+* Felix Renicks
