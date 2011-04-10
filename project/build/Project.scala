@@ -30,6 +30,8 @@ class LiftProject(info: ProjectInfo) extends DefaultWebProject(info)
   val dispatch   = "net.databinder" %% "dispatch-http" % "0.7.8" % "compile"
   val twitter    = "net.databinder" %% "dispatch-twitter" % "0.7.8" % "compile"
   
+  val jsoup      = "org.jsoup" % "jsoup" % "1.5.2" % "compile"
+
   object Repositories {
     lazy val MavenLocal           = MavenRepository("local.repo", "file://"+Path.userHome+"/.m2/repository")
     lazy val MavenCentral         = MavenRepository("central.repo", "http://repo1.maven.org/maven2/")
